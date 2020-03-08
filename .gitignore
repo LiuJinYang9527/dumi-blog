@@ -1,0 +1,8 @@
+node_modules
+dist
+*.zip
+yarn.lock
+
+# umi
+.umi
+.umi-production
