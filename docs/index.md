@@ -19,7 +19,3 @@ features:
     desc: 独特的 Markdown 扩展，可嵌入 Demo、可导入外部 Demo 甚至插入自定义 React 组件，使得组件的文档不仅能看，还好用
 footer: 我是footer~
 ---
-
-
-
-
