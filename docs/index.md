@@ -3,7 +3,7 @@ title: Melon的前端进阶之路
 order: 10
 hero:
   title: 进阶之路
-  desc: 制定学习计划、记录学习总结，不断成长，杜绝安逸
+  desc: 制定学习计划、记录学习总结，不断成长，杜绝安逸，仅供自己学习使用
   actions:
     - text: 开始学习
       link: /plan
