@@ -1,5 +1,6 @@
 ---
 title: 学习计划
+toc: menu
 nav:
   title: 学习计划
   order: 1

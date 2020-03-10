@@ -7,6 +7,48 @@ export default defineConfig({
     type: 'hash',
   },
   hash: true,
-  navs: [null],
+  navs: [
+    null,
+    {
+      title: 'GitHub',
+      path: 'https://github.com/LiuJinYang9527/dumi-blog',
+    },
+  ],
+  menus: {
+    '/article': [
+      {
+        title: 'JavaScript',
+        children: [
+          'article/js/dataType',
+          'article/js/prototype-chain',
+          'article/js/closure',
+          'article/js/event-loop',
+          'article/js/practice',
+          'article/js/mode',
+          'article/js/function',
+          'article/js/regexp',
+        ],
+      },
+      {
+        title: 'Vue相关',
+        children: [
+          'article/Vue/sourcecode',
+          'article/Vue/element',
+          'article/Vue/vuex',
+          'article/Vue/vueRouter',
+        ],
+      },
+      {
+        title: 'React相关',
+        children: [
+          'article/React/component',
+          'article/React/antd',
+          'article/React/reactHooks',
+          'article/React/react-redux',
+          'article/React/react-router',
+        ],
+      },
+    ],
+  },
   // more config: https://d.umijs.org/config
 });
