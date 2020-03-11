@@ -131,3 +131,7 @@ var result = closure();//2
 
 closure = null ;//解除引用，释放内存
 ```
+
+## 参考文章
+
+《JavaScript 高级程序设计第三版》4.2 小节以及 7.2 小节内容
