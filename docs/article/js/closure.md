@@ -97,10 +97,11 @@ export default () => <img src={Chain} width="100%" />;
 
 - try-catch
 - with
-  这两个语句都在作用域链的前端添加一个对象。
+- eval
 
 with 语句会将指定的对象添加到作用域链中。
 catch 则是把捕捉到的错误对象创建为一个新的变量对象放入作用域链中。
+eval 则是将字符串转换为 js 代码，创建一个新的执行环境。
 
 ## 闭包
 

@@ -1,1 +1,1 @@
-# javaScript 运行机制
+# JavaScript 运行机制
