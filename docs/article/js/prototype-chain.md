@@ -140,6 +140,56 @@ let obj2 = Object.create({});
 
 > Object.create() 为 es6 创建对象的方式，可以理解为继承一个对象。
 
+## 一些原型链面试题
+
+```js
+var obj1 = { name: 'one' };
+obj2 = Object.create(obj1);
+obj2.name = 'two';
+console.log(obj1.name);
+//one
+
+var obj1 = { prop: { name: 'one' } };
+obj2 = Object.create(obj1);
+obj2.prop.name = 'two';
+console.log(obj1.prop.name);
+//two
+
+var obj1 = { list: ['one', 'one', 'one'] };
+obj2 = Object.create(obj1);
+obj2.list[0] = 'two';
+console.log(obj1.list[0]);
+//two
+
+function Foo() {
+  getName = function() {
+    alert(1);
+  };
+  return this;
+}
+Foo.getName = function() {
+  alert(2);
+};
+Foo.prototype.getName = function() {
+  alert(3);
+};
+var getName = function() {
+  alert(4);
+};
+function getName() {
+  alert(5);
+}
+
+//请写出以下输出结果：
+Foo.getName(); // 2
+getName(); // 4
+Foo().getName(); // 1
+getName(); // 1
+new Foo.getName(); // 2
+new Foo().getName(); // 3
+new new Foo().getName(); // 3
+```
+
 ## 参考文章
 
 [2019 面试准备 - JS 原型与原型链](https://juejin.im/post/5c72a1766fb9a049ea3993e6)
