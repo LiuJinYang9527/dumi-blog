@@ -6,3 +6,9 @@ node_js:
 branchs:
  only:
   - master 
+  
+install:
+- npm install
+
+script:
+- npm run build
