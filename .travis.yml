@@ -8,6 +8,7 @@ branchs:
   - master 
   
 install:
+- webpack -v
 - yarn
 
 script:
