@@ -2,13 +2,13 @@
 language: node_js
 
 node_js:
- - 8
+ - 8.11.1
 branchs:
  only:
   - master 
   
 install:
-- npm install
+- yarn
 
 script:
 - npm run build
