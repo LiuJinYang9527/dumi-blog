@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: 'Melon的博客',
+  title: 'Melon',
   mode: 'site',
   history: {
     type: 'hash',
