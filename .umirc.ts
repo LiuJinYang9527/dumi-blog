@@ -49,6 +49,14 @@ export default defineConfig({
           'article/React/react-router',
         ],
       },
+      {
+        title: 'Note相关',
+        children: ['article/Node/index'],
+      },
+      {
+        title: 'TypeScript',
+        children: ['article/TypeScript/index'],
+      },
     ],
   },
   // more config: https://d.umijs.org/config
