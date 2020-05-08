@@ -242,3 +242,329 @@ http
 npm 模块
 
 - httpserver
+
+## Expres
+
+> 要了解一个框架，最好的方法
+
+- 了解它的关键功能
+- 推导出它要解决的问题是什么
+
+### 核心功能
+
+- 路由
+- request/response 简化
+  - request：pathname、query 等
+  - response：send() json() jsonp()等
+
+安装：
+
+```js
+npm i express
+```
+
+上方`indexjs`使用 express 重构
+
+```js
+//index.js
+const fs = require('fs');
+const game = require('./game');
+const express = require('express');
+
+// 玩家胜利次数，如果超过3，则后续往该服务器的请求都返回500
+var playerWinCount = 0;
+// 玩家的上一次游戏动作
+var lastPlayerAction = null;
+// 玩家连续出同一个动作的次数
+var sameCount = 0;
+
+const app = express();
+
+// 通过app.get设定 /favicon.ico 路径的路由
+// .get 代表请求 method 是 get，所以这里可以用 post、delete 等。这个能力很适合用于创建 rest 服务
+app.get('/favicon.ico', function(request, response) {
+  // 一句 status(200) 代替 writeHead(200); end();
+  response.status(200);
+  return;
+});
+
+// 设定 /game 路径的路由
+app.get(
+  '/game',
+
+  function(request, response, next) {
+    if (playerWinCount >= 3 || sameCount == 9) {
+      response.status(500);
+      response.send('我不会再玩了！');
+      return;
+    }
+
+    // 通过next执行后续中间件
+    next();
+
+    // 当后续中间件执行完之后，会执行到这个位置
+    if (response.playerWon) {
+      playerWinCount++;
+    }
+  },
+
+  function(request, response, next) {
+    // express自动帮我们把query处理好挂在request上
+    const query = request.query;
+    const playerAction = query.action;
+
+    if (!playerAction) {
+      response.status(400);
+      response.send();
+      return;
+    }
+
+    if (lastPlayerAction == playerAction) {
+      sameCount++;
+      if (sameCount >= 3) {
+        response.status(400);
+        response.send('你作弊！我再也不玩了');
+        sameCount = 9;
+        return;
+      }
+    } else {
+      sameCount = 0;
+    }
+    lastPlayerAction = playerAction;
+
+    // 把用户操作挂在response上传递给下一个中间件
+    response.playerAction = playerAction;
+    next();
+  },
+
+  function(req, response) {
+    const playerAction = response.playerAction;
+    const result = game(playerAction);
+
+    // 如果这里执行setTimeout，会导致前面的洋葱模型失效
+    // 因为playerWon不是在中间件执行流程所属的那个事件循环里赋值的
+    // setTimeout(()=> {
+    response.status(200);
+    if (result == 0) {
+      response.send('平局');
+    } else if (result == -1) {
+      response.send('你输了');
+    } else {
+      response.send('你赢了');
+      response.playerWon = true;
+    }
+    // }, 500)
+  },
+);
+
+app.get('/', function(request, response) {
+  // send接口会判断你传入的值的类型，文本的话则会处理为text/html
+  // Buffer的话则会处理为下载
+  response.send(fs.readFileSync(__dirname + '/index.html', 'utf-8'));
+});
+app.listen(3000);
+```
+
+```js
+//game.js
+module.exports = function(playerAction) {
+  // 计算电脑出的东西
+  var computerAction;
+  var random = Math.random() * 3;
+  if (random < 1) {
+    computerAction = 'rock';
+    // console.log('电脑出了石头')
+  } else if (random > 2) {
+    computerAction = 'scissor';
+    // console.log('电脑出了剪刀')
+  } else {
+    computerAction = 'paper';
+    // console.log('电脑出了布')
+  }
+
+  if (computerAction == playerAction) {
+    return 0;
+  } else if (
+    (computerAction == 'rock' && playerAction == 'scissor') ||
+    (computerAction == 'scissor' && playerAction == 'paper') ||
+    (computerAction == 'paper' && playerAction == 'rock')
+  ) {
+    return -1;
+  } else {
+    return 1;
+  }
+};
+```
+
+```html
+<!-- index.html-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      button {
+        display: inline-block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="output"
+      style="height: 400px; width: 600px; background: #eee"
+    ></div>
+    <button id="rock" style="height: 40px; width: 80px">石头</button>
+    <button id="scissor" style="height: 40px; width: 80px">剪刀</button>
+    <button id="paper" style="height: 40px; width: 80px">布</button>
+  </body>
+  <script>
+    const $button = {
+      rock: document.getElementById('rock'),
+      scissor: document.getElementById('scissor'),
+      paper: document.getElementById('paper'),
+    };
+
+    const $output = document.getElementById('output');
+
+    Object.keys($button).forEach(key => {
+      $button[key].addEventListener('click', function() {
+        fetch(`http://${location.host}/game?action=${key}`)
+          .then(res => {
+            return res.text();
+          })
+          .then(text => {
+            $output.innerHTML += text + '<br/>';
+          });
+      });
+    });
+  </script>
+</html>
+```
+
+## Koa
+
+> 由于 express 中间件对于异步调用的支持不好，社区又产生了一个新的框架 Koa。
+
+### 核心功能
+
+- 使用 async function 实现的中间件
+  - 有 暂停执行 的能力
+  - 在异步的情况下也符合洋葱模型
+- 精简内核，所有额外功能都移到中间件里实现
+
+安装：
+
+```js
+npm i koa
+```
+
+上面`index.js`使用 koa 改造
+
+```js
+//index.js
+const fs = require('fs');
+const game = require('./game');
+const koa = require('koa');
+const mount = require('koa-mount');
+
+// 玩家胜利次数，如果超过3，则后续往该服务器的请求都返回500
+var playerWinCount = 0;
+// 玩家的上一次游戏动作
+var lastPlayerAction = null;
+// 玩家连续出同一个动作的次数
+var sameCount = 0;
+
+const app = new koa();
+
+app.use(
+  mount('/favicon.ico', function(ctx) {
+    // koa比express做了更极致的response处理函数
+    // 因为koa使用异步函数作为中间件的实现方式
+    // 所以koa可以在等待所有中间件执行完毕之后再统一处理返回值，因此可以用赋值运算符
+    ctx.status = 200;
+  }),
+);
+
+const gameKoa = new koa();
+app.use(mount('/game', gameKoa));
+gameKoa.use(async function(ctx, next) {
+  if (playerWinCount >= 3) {
+    ctx.status = 500;
+    ctx.body = '我不会再玩了！';
+    return;
+  }
+
+  // 使用await 关键字等待后续中间件执行完成
+  await next();
+
+  // 就能获得一个准确的洋葱模型效果
+  if (ctx.playerWon) {
+    playerWinCount++;
+  }
+});
+gameKoa.use(async function(ctx, next) {
+  const query = ctx.query;
+  const playerAction = query.action;
+  if (!playerAction) {
+    ctx.status = 400;
+    return;
+  }
+  if (sameCount == 9) {
+    ctx.status = 500;
+    ctx.body = '我不会再玩了！';
+  }
+
+  if (lastPlayerAction == playerAction) {
+    sameCount++;
+    if (sameCount >= 3) {
+      ctx.status = 400;
+      ctx.body = '你作弊！我再也不玩了';
+      sameCount = 9;
+      return;
+    }
+  } else {
+    sameCount = 0;
+  }
+  lastPlayerAction = playerAction;
+  ctx.playerAction = playerAction;
+  await next();
+});
+gameKoa.use(async function(ctx, next) {
+  const playerAction = ctx.playerAction;
+  const result = game(playerAction);
+
+  // 对于一定需要在请求主流程里完成的操作，一定要使用await进行等待
+  // 否则koa就会在当前事件循环就把http response返回出去了
+  await new Promise(resolve => {
+    setTimeout(() => {
+      ctx.status = 200;
+      if (result == 0) {
+        ctx.body = '平局';
+      } else if (result == -1) {
+        ctx.body = '你输了';
+      } else {
+        ctx.body = '你赢了';
+        ctx.playerWon = true;
+      }
+      resolve();
+    }, 500);
+  });
+});
+
+app.use(
+  mount('/', function(ctx) {
+    ctx.body = fs.readFileSync(__dirname + '/index.html', 'utf-8');
+  }),
+);
+app.listen(3000);
+```
+
+### Express vs Koa
+
+- express 门槛低，koa 强大优雅
+- express 内置封装更多东西，开发更快速 ，koa 可定制性更高
