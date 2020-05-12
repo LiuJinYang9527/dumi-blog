@@ -10,5 +10,5 @@ branchs:
 install:
 - yarn
 
-script:
+script: 
 - yarn build
