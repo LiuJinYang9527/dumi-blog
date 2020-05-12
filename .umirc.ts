@@ -58,6 +58,10 @@ export default defineConfig({
         title: 'TypeScript',
         children: ['article/TypeScript/index'],
       },
+      {
+        title: '持续集成',
+        children: ['article/CI-CD/index'],
+      },
     ],
   },
   // more config: https://d.umijs.org/config
