@@ -6,7 +6,7 @@ export default defineConfig({
   history: {
     type: 'hash',
   },
-  
+  publicPath:'./',
   hash: true,
   navs: [
     null,
