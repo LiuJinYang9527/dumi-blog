@@ -1,21 +1,3 @@
-# dumi app
 
-## Getting Started
-
-Install dependencies,
-
-```bash
-$ npm i
-```
-
-Start the dev server,
-
-```bash
-$ npm start
-```
-
-Build site app,
-
-```bash
-$ npm run build
-```
+# 地址
+[https://liujinyang9527.github.io/dumi-blog/](https://liujinyang9527.github.io/dumi-blog/)
