@@ -62,6 +62,10 @@ export default defineConfig({
         title: '持续集成',
         children: ['article/CI-CD/index'],
       },
+      {
+        title:'服务器相关',
+        children: ['article/Server/index'],
+      }
     ],
   },
   // more config: https://d.umijs.org/config

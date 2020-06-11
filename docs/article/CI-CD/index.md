@@ -7,6 +7,8 @@ toc: menu
 
 [中文文档](https://www.jenkins.io/zh/) 
 
+[Docker安装Jenkins](https://www.jenkins.io/doc/book/installing/#docker)
+
 ## 准备
 
 - 创建一个 github 项目（gitlab、码云也行）
