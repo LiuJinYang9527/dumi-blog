@@ -199,3 +199,28 @@ Execcommand ：传输完了要执行的命令，
 ![创建Jenkins](../../assets/WechatIMG15.png)
 
 点击保存，然后再次进行构建测试，查看效果
+
+
+## 问题
++ jenkins构建执行shell脚本时遇到权限问题
+
+> 原因可能为当前执行的用户为jenkins
+
+查看当前用户，执行以下命令，配置在jenkins构建shell中
+```shell
+echo "当前操作人"
+whoami
+echo "当前目录"
+pwd
+```
+
+查看配置文件
+```
+vi /etc/sysconfig/jenkins 
+```
+修改JENKINS_USER="root"
+
+最后重启Jenkins即可
+```
+service jenkins restart
+```
