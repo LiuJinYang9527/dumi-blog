@@ -152,6 +152,19 @@ $ sudo docker run hello-world
 ```
 [Docker官方文档](https://docs.docker.com/engine/install/centos/)
 
+#### docker pull 镜像过慢问题
+```shell
+##使用阿里云镜像加速器
+[root@localhost ~]# mkdir -p /etc/docker
+[root@localhost ~]# tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://9cpn8tt6.mirror.aliyuncs.com"]
+}
+EOF
+[root@localhost ~]# systemctl daemon-reload
+[root@localhost ~]# systemctl restart docker
+```
+
 
 
 
