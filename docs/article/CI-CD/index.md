@@ -116,7 +116,11 @@ vim /var/lib/jenkins/secrets/initialAdminPassword
 
 #### 安装 Generic Webhook Trigger Plugin 插件
 
-（系统管理-插件管理-搜索 Generic Webhook Trigger Plugin）如果可选插件列表为空，点击高级标签页，替换升级站点的 URL 为：http://mirror.xmission.com/jenkins/updates/update-center.json并且点击提交和立即获取。
+（系统管理-插件管理-搜索 Generic Webhook Trigger Plugin）如果可选插件列表为空，点击高级标签页，替换升级站点的 URL 为：http://mirror.xmission.com/jenkins/updates/update-center.json
+
+并且点击提交和立即获取。
+
+> 或者使用Jenkins中文社区提供的更新地址:https://updates.jenkins-zh.cn/update-center.json
 
 #### 配置触发器
 
