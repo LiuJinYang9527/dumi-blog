@@ -124,6 +124,11 @@ ssh -T git@github.com
 
 [宝塔官网](https://www.bt.cn/download/linux.html)
 
+### yum源相关
+
+有时yum自带源下载速度过慢，可使用其他源
+
+[CenotOS源使用帮助](http://mirrors.ustc.edu.cn/help/centos.html?highlight=yum)
 
 ### 安装Docker
 
@@ -141,6 +146,10 @@ $ sudo yum-config-manager \
 2.安装docker引擎
 ```shell
 $ sudo yum install docker-ce docker-ce-cli containerd.io
+
+或者直接
+
+$ sudo yum install docker
 ```
 3.启动docker
 ```shell
@@ -151,6 +160,8 @@ $ sudo systemctl start docker
 $ sudo docker run hello-world
 ```
 [Docker官方文档](https://docs.docker.com/engine/install/centos/)
+
+[DockerGUI管理工具部署以及汉化](https://www.quchao.net/Portainer-CN.html)
 
 #### docker pull 镜像过慢问题
 ```shell
