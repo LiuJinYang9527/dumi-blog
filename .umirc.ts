@@ -1,5 +1,4 @@
 import { defineConfig } from 'dumi';
-
 export default defineConfig({
   title: 'Melon',
   mode: 'site',
@@ -15,6 +14,8 @@ export default defineConfig({
       path: 'https://github.com/LiuJinYang9527/dumi-blog',
     },
   ],
+  favicon: '/favicon.ico',
+  logo:"/melon.png",
   menus: {
     '/article': [
       {
@@ -26,6 +27,7 @@ export default defineConfig({
           'article/js/inherit',
           'article/js/event-loop',
           'article/js/practice',
+          'article/js/algorithms',
           'article/js/function',
           'article/js/mode',
           'article/js/regexp',
