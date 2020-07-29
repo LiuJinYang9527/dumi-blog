@@ -12,7 +12,7 @@ toc: menu
 ## 准备
 
 - 创建一个 github 项目（gitlab、码云也行）
-- 有一台云服务器，最起码 1 核 2g 以上，配置好 Java 环境，否则跑 Jenkins 服务时服务器直接崩了（其实是安装 node_modules 时崩了）
+- 有一台云服务器，最起码 1 核 2g 以上，配置好 Java 环境
 
 ## 安装 Jenkins
 
@@ -116,11 +116,30 @@ vim /var/lib/jenkins/secrets/initialAdminPassword
 
 #### 安装 Generic Webhook Trigger Plugin 插件
 
-（系统管理-插件管理-搜索 Generic Webhook Trigger Plugin）如果可选插件列表为空，点击高级标签页，替换升级站点的 URL 为：http://mirror.xmission.com/jenkins/updates/update-center.json
+（系统管理-插件管理-搜索 Generic Webhook Trigger Plugin）如果可选插件列表为空，点击高级标签页，替换升级站点的 URL 为：http://mirror.xmission.com/jenkins/updates/update-center.json 
+
+或者使用下方地址
 
 并且点击提交和立即获取。
 
-> 或者使用Jenkins中文社区提供的更新地址:https://updates.jenkins-zh.cn/update-center.json
+#####  jenkins镜像加速
+
+Jenkins 所有镜像列表： http://mirrors.jenkins-ci.org/status.html
+
+比如日本的镜像：
+ http://mirror.esuni.jp/jenkins/
+ http://ftp.yz.yamagata-u.ac.jp/pub/misc/jenkins/
+ http://ftp.tsukuba.wide.ad.jp/software/jenkins/
+
+德国的镜像：
+http://jenkins.mirror.isppower.de/  
+http://mirror.yandex.ru/mirrors/jenkins/
+
+官方的镜像：http://mirrors.jenkins-ci.org/
+http://archives.jenkins-ci.org/
+
+清华大学镜像：
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
 
 #### 配置触发器
 
