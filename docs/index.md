@@ -5,7 +5,7 @@ hero:
   title: 进阶之路
   desc: 制定学习计划、记录学习总结，不断成长，杜绝安逸，仅供自己学习使用
   actions:
-    - text: 开始学习
+    - text: 开始
       link: /plan
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
