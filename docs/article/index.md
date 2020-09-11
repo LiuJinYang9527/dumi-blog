@@ -1,5 +1,5 @@
 ---
-title: 学习总结
+title: 总结
 nav:
   title: 学习总结
   order: 2

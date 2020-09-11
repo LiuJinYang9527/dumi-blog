@@ -1,8 +1,8 @@
 ---
-title: 面试题
+title: 常见面试题
 toc: menu
 nav:
-  title: 面试题
+  title: 常见面试题
 ---
 
 ## 1.viewport 的作用以及移动端适配

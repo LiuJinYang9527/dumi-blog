@@ -1,6 +1,6 @@
 ---
 title: 服务器相关
-toc: menu
+toc: content
 ---
 # 服务器相关
 
@@ -159,6 +159,11 @@ $ sudo systemctl start docker
 ```shell
 $ sudo docker run hello-world
 ```
+
+#### 卸载旧版本
+```shell
+yum remove docker  docker-common docker-selinux docker-engine
+```
 [Docker官方文档](https://docs.docker.com/engine/install/centos/)
 
 [DockerGUI管理工具部署以及汉化](https://www.quchao.net/Portainer-CN.html)
@@ -176,6 +181,50 @@ EOF
 [root@localhost ~]# systemctl restart docker
 ```
 
+### 安装docker-compose
 
+1.通过pip
+```shell
+yum -y install epel-release
+
+yum -y install python-pip
+
+pip --version
+
+pip install --upgrade pip #如果版本过低
+
+pip install docker-compose
+
+docker-compose version
+```
+
+2.curl命令行下载安装
+
+> 需要以下依赖包:py-pip、python-dev、libffe -dev、openssl-dev、gcc、libc-dev和make。
+
+```shell
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+3.直接下载(我用的这种)
+```shell
+cd /usr/local/bin
+
+wget https://github.com/docker/compose/releases/download/1.27.2/docker-compose-Linux-x86_64
+
+```
+然后删除当前目录下的docker-compose文件，将下载的文件重名为docker-compose
+
+赋予权限
+```shell
+chmod +x /usr/local/bin/docker-compose
+```
+验证
+```
+docker-compose --version
+```
 
 

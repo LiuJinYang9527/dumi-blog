@@ -1,6 +1,6 @@
 ---
 title: Node入门
-toc: menu
+toc: content
 ---
 
 # 什么是 Node.js

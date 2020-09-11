@@ -1,6 +1,6 @@
 ---
 title: 持续集成
-toc: menu
+toc: content
 ---
 
 # Jenkins
