@@ -227,4 +227,107 @@ chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
 
+### 安装yarn
+#### 准备工作
+1.1 浏览器访问安装包下载地址：
+```shell
+https://github.com/yarnpkg/yarn/releases/
+```
+找到需要安装的版本，以v1.22.5为例，地址为：
+```shell
+https://github.com/yarnpkg/yarn/releases/download/v1.22.5/yarn-v1.22.5.tar.gz
+```
+1.2 下载源码
+
+第一种(推荐)
+```shell
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+sudo yum install yarn -y
+```
+第二种
+```shell
+$ mkdir -p /usr/local/yarn
+$ wget https://github.com/yarnpkg/yarn/releases/download/v1.22.5/yarn-v1.22.5.tar.gz
+$ tar -zxvf yarn-v1.22.5.tar.gz -C /usr/local/yarn
+```
+2 安装
+yarn不需要安装过程，直接下载后配置profile即可使用。
+
+2.1 设置/etc/profile
+```shell
+$ vim /etc/profile
+# 在文件结尾加入以下内容
+export PATH=$PATH:/usr/local/yarn/yarn-v1.22.5/bin
+```
+2.2 即时生效
+```shell
+source /etc/profile
+```
+2.3 查看安装情况
+```shell
+$ yarn -v
+```
+如果安装成功，会显示：
+```shell
+1.12.0
+```
+最后一种
+如果不行就去github下载tar.gz文件，手动上传到服务器目录上，之后操作步骤和第二种相同。
+
+#### 安装mwget
+使用wget有时太慢，所以需要mwget
+1.安装mwget
+```shell
+wget http://jaist.dl.sourceforge.net/project/kmphpfm/mwget/0.1/mwget_0.1.0.orig.tar.bz2
+```
+```shell
+tar -xjvf mwget_0.1.0.orig.tar.bz2
+```
+```shell
+cd mwget_0.1.0.orig
+# 执行./configure
+./configure
+```
+如果出现 error: C++ compiler cannot create executables 说明没有安装c++编译器 安装一个c++编译器就可以了
+```shell
+yum install gcc-c++
+```
+如果执行./configure 出现 configure: error: Your intltool is too old.  You need intltool 0.35.0 or later.
+
+需要安装0.35.0以上的版本
+
+```shell
+yum install intltool
+```
+最后
+```shell
+make
+make install
+```
+安装完毕后 可以使用mwget下载
+```shell
+mwget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz
+```
+
+### 安装pm2
+
+cnpm安装
+```shell
+yarn global add pm2
+```
+or
+
+```shell
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
+其实也不用cnpm，npm即可,这里还是用吧
+```shell
+cnpm install pm2 -g  
+```
+or
+
+通过宝塔面板-软件商店安装pm2管理器
+
+
+
 
