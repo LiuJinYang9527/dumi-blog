@@ -1,9 +1,9 @@
 ---
-title: Melon的前端进阶之路
+title: Melon的前端知识总结
 order: 10
 hero:
-  title: 进阶之路
-  desc: 制定学习计划、记录学习总结，不断成长，杜绝安逸，仅供自己学习使用
+  title: 前端知识总结
+  desc: 制定学习计划、记录学习总结、每天进步一点点
   actions:
     - text: 开始
       link: /plan
@@ -17,5 +17,4 @@ features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
     title: 为组件开发而生
     desc: 独特的 Markdown 扩展，可嵌入 Demo、可导入外部 Demo 甚至插入自定义 React 组件，使得组件的文档不仅能看，还好用
-footer: 我是footer~
 ---
