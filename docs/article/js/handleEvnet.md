@@ -89,7 +89,7 @@ export default ()=>(
   <div>
     <Button data-action="toast"  onClick={toastMessage}>点我就message 无防抖</Button>
     <br/>
-    <Button style={{marginTop:'10px'}} data-action="debounce-toast"  onClick={handleToast}>点我就message 1s执行1次</Button>
+    <Button style={{marginTop:'10px'}} data-action="debounce-toast"  onClick={handleToast}>点我就message 点击之后1s执行1次</Button>
   </div>
 )
 ```
@@ -180,9 +180,9 @@ export default ()=>(
   <div>
     <Button data-action="toast"  onClick={toastMessage}>点我就message 无防抖</Button>
     <br/>
-    <Button style={{marginTop:'10px'}} data-action="debounce-toast"  onClick={handleToast}>点我就message 1s执行1次</Button>
+    <Button style={{marginTop:'10px'}} data-action="debounce-toast"  onClick={handleToast}>点我就message 点击1s之后执行1次</Button>
       <br/>
-    <Button style={{marginTop:'10px'}} data-action="debounce-toast-i"  onClick={handleToastIme}>点我就message 1s执行1次  首次立即执行</Button>
+    <Button style={{marginTop:'10px'}} data-action="debounce-toast-i"  onClick={handleToastIme}>点我就message 点击1s之后执行1次  首次立即执行</Button>
   </div>
 )
 ```
@@ -194,4 +194,107 @@ export default ()=>(
 
 ##  节流 
 
-待更新...
+上边说过了防抖，那么接下来说节流，说起来这两者的作用其实很相似，都是用来做限制一些频繁触发的接口调用或者事件的，但也是有差别的。
+
+节流的概念：
+
+持续频繁的去触发事件，每隔一定时间，只会执行一次。
+
+摘自网上一段比较容易理解的解释：
+
+假设你正在乘电梯上楼，当电梯门关闭之前发现有人也要乘电梯，礼貌起见，你会按下开门开关，然后等他进电梯； 但是，你是个没耐心的人，你最多只会等待电梯停留一分钟； 在这一分钟内，你会开门让别人进来，但是过了一分钟之后，你就会关门，让电梯上楼。
+
+所以throttle的作用是，预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新的时间周期。
+
+了解完概念之后，那么来考虑一下用代码如何去实现，跟实现防抖时一样，先来列一下要点：
+
++ 接受一个函数参数，一个延迟执行的时间参数
+
++ 内部需要有一个判断当前是否可以执行函数的变量，判断的条件是 1.是否为初次执行 2.距离上一次执行是否超过了延迟执行的参数，这个变量同样需要用闭包保存起来。
+
+雏形：
+```js
+function throttle(func,wait){
+  let fn = func;
+  // 定义 一个变量用来保存上次执行时的时间戳
+  let  previous = 0;
+  return function(){
+    //获取当前的时间戳
+    let now = + new Date();
+    //保存函数执行时真正的this
+    let context = this;
+    //接受参数
+    let args = arguments;
+    //如果当前与上次的触发动作时间差已经超过了等待时间 则执行
+    if(now - previous > wait){
+      //修正函数执行时的this 
+      fn.apply(context,args);
+      //将当前时间赋给previous变量
+      previous = now;
+    }
+  }
+
+}
+```
+
+下面来测试一下：
+```jsx
+
+/**
+ * motions:
+ *  - click:[data-action="toast"]
+ *  - click:[data-action="toast"]
+ *  - click:[data-action="toast"]
+ *  - click:[data-action="throttle-toast"]
+ *  - click:[data-action="throttle-toast"]
+ *  - click:[data-action="throttle-toast"]
+ */
+import React from "react";
+import  { Button,message} from "antd"
+import 'antd/dist/antd.css';
+
+function throttle(func,wait){
+  let fn = func;
+  // 定义 一个变量用来保存上次执行时的时间戳
+  let  previous = 0;
+  return function(){
+    //获取当前的时间戳
+    let now = + new Date();
+    //保存函数执行时真正的this
+    let context = this;
+    //接受参数
+    let args = arguments;
+    //如果当前与上次的触发动作时间差已经超过了等待时间 则执行
+    if(now - previous > wait){
+      //修正函数执行时的this 
+      fn.apply(context,args);
+      //将当前时间赋给previous变量
+      previous = now;
+    }
+  }
+
+}
+
+
+const toastMessage = ()=>{
+    message.success('哈哈');
+}
+
+
+const handleToast = throttle(toastMessage,1000,false);
+
+export default ()=>(
+  <div>
+    <Button data-action="toast"  onClick={toastMessage}>点我就message 无节流</Button>
+    <br/>
+    <Button style={{marginTop:'10px'}} data-action="throttle-toast"  onClick={handleToast}>点我就message 1s内只会执行1次</Button>
+      <br/>
+  </div>
+)
+```
+
+一个满足大多数业务开发场景的节流函数就好了，但是也有缺点，可以参考下方文章自己手动改造一下。（晚上11点了，被催睡觉了😢）
+
+### 参考文章
+
+[JavaScript专题之跟着 underscore 学节流](https://juejin.cn/post/6844903481761857543#heading-0)
